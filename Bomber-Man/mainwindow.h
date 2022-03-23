@@ -10,6 +10,7 @@
 #include <QKeyEvent>
 #include <QGraphicsItem>
 #include <vector>
+#include <QtGlobal>
 
 #include "jugador.h"
 #include "campo.h"
@@ -29,6 +30,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QTimer *timer = new QTimer();
+    QTimer *timer3 = new QTimer();
     QTime time;
     QMessageBox msgBox;
     std::vector<std::vector<Campo *>> campos;
@@ -36,6 +38,7 @@ public:
 public slots:
     void actualizarEstado();
     void actualizarCronometro();
+    void actualizarEnemigo();
     void ResultadoFinal();
     void jugadorMuerto();
     void enemigoMuerto();

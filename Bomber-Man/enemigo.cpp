@@ -1,6 +1,7 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QDebug>
 
 #include "enemigo.h"
 #include "configuracion.h"
@@ -8,7 +9,7 @@
 
 Enemigo::Enemigo(int x, int y, QObject *parent)  : QObject (parent) {
 //    timer2 = new QTimer(this);
-//    connect(timer2, SIGNAL(timeout()), this, SLOT(mover(Derecha2,campos)));
+//    connect(timer2, SIGNAL(timeout()), this, SLOT(mover()));
     _x = x;
     _y = y;
     vida2 = tamanios::Vida2;
@@ -22,26 +23,31 @@ Enemigo::~Enemigo(){
 }
 
 void Enemigo::mover(direccion2 dir, std::vector<std::vector<Campo *>>& campos) {
-    while (dir==Derecha2){
+    std::uniform_int_distribution<int>dist(1,2);
+    int valor=dist(*QRandomGenerator::global());
+    if (valor==1){
+        dir=Derecha2;
+    }
+    else{
+        dir=Izquierda2;
+    }
+
+    if (dir==Derecha2){
         if (_x < tamanios::Columnas - 1 && getCampo(_x + 1, _y, campos)->esVacio()) {
             getCampo(_x, _y, campos)->enemigoOut(this);
             getCampo(_x + 1, _y, campos)->enemigoOn(this);
             ++_x;
             setPos(_x * tamanios::TamanioCampo, _y * tamanios::TamanioCampo);
-        }
-        else{
-            dir=Izquierda2;
+
         }
     }
-    while(dir==Izquierda2){
+    else if(dir==Izquierda2){
+
         if (_x > 0 && getCampo(_x - 1, _y, campos)->esVacio()) {
             getCampo(_x, _y, campos)->enemigoOut(this);
             getCampo(_x - 1, _y, campos)->enemigoOn(this);
             --_x;
             setPos(_x * tamanios::TamanioCampo, _y * tamanios::TamanioCampo);
-        }
-        else{
-            dir=Derecha2;
         }
     }
 }

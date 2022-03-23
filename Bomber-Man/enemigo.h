@@ -4,11 +4,12 @@
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QTimer>
+#include <QRandomGenerator64>
 
 #include "campo.h"
 
 enum direccion2 {
-        Izquierda2,
+    Izquierda2,
     Derecha2,
 };
 

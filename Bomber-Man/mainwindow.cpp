@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(actualizarEstado()));
+    connect(timer3, SIGNAL(timeout()), this, SLOT(actualizarEnemigo()));
     escena = new QGraphicsScene(this);
     int fil=(tamanios::Filas)*(tamanios::TamanioCampo);
     int col=(tamanios::Columnas)*(tamanios::TamanioCampo);
@@ -48,8 +49,6 @@ void MainWindow::inicializarJuego(){
     enemigo1 = new Enemigo(10,6);
     connect(enemigo1, SIGNAL(enemigoMuerto()), this, SLOT(enemigoMuerto()));
     campos[10][6]->enemigoOn(enemigo1);
-    enemigo1->mover(Derecha2,campos);
-    enemigo1->mover(Izquierda2,campos);
 
 //    enemigo2 = new Enemigo(16,6);
 //    connect(enemigo2, SIGNAL(enemigoMuerto()), this, SLOT(enemigoMuerto()));
@@ -66,9 +65,10 @@ void MainWindow::inicializarJuego(){
     setFocus();
 
 
-    time.setHMS(0,2,0);
+    time.setHMS(0,1,30);
     ui->cronometro->setText(time.toString("m:ss"));
     timer->start();
+    timer3->start(300);
 }
 
 void MainWindow::ResultadoFinal(){
@@ -85,6 +85,12 @@ void MainWindow::ResultadoFinal(){
 void MainWindow::actualizarCronometro(){
     time=time.addMSecs(-1);
     ui->cronometro->setText(time.toString("m:ss"));
+}
+
+void MainWindow::actualizarEnemigo()
+{
+
+    enemigo1->mover(Izquierda2,campos);
 }
 
 void MainWindow::actualizarEstado(){
